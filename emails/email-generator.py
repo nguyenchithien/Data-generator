@@ -10,6 +10,8 @@ hosts = [ "chainMAIL", "corNET", "garNET", "sonNET", "plaNET", "telekiNETic", "c
 # tlds
 tlds = [ ".com", ".net", ".edu", ".co.uk", ".info" ]
 
+used = []
+
 def ReadFiles():
 	with( open( "../data-animals.txt" ) ) as fileHandle:
 		lines = fileHandle.readlines()
@@ -26,11 +28,22 @@ def ReadFiles():
 		adjectives.append( line )
 
 def GetRandomEmail():
-	a = random.choice( adjectives ) + "-" + random.choice( animals )
+	a = random.choice( adjectives ) + "-" + random.choice( animals ) + "-" + str( random.randint( 0, 3000 ) )
 	b = random.choice( hosts )
 	c = random.choice( tlds )
+	
+	email = a + "@" + b + c
+	
+	while ( email in used ):
+		a = random.choice( adjectives ) + "-" + random.choice( animals ) + "-" + str( random.randint( 0, 3000 ) )
+		b = random.choice( hosts )
+		c = random.choice( tlds )
+		
+		email = a + "@" + b + c
+	
+	used.append( email )
 
-	return a + "@" + b + c
+	return email
 
 ReadFiles()
 
